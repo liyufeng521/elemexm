@@ -13,7 +13,6 @@
                     <p class="data">{{v.end_date}}到期</p>
                     <p class="phone">限收货手机号为：{{v.phone}}</p>
                 </div>
-
                 <span class="list_right">剩3日</span>
             </li>
         </ul>
@@ -31,16 +30,14 @@ export default {
              data:{},//传过来的信息
             mess:"",//请求的信息
             mess_bol:false,
+            lists:[],
+            amount:""
         }
     },
      created(){
         this.data=this.$route.query.data;
-        if(this.$route.query.data){
-            localStorage.dte=this.$route.query.data;
-        }
         console.log(this.data);
         this.getmessage();
-        console.log(2);
     },
     methods:{
          
@@ -52,7 +49,6 @@ export default {
             }).then(res=>{
                 console.log(res);
                 this.mess=res.data;
-                console.log(1);
                 this.mess_bol=true;
             })
         },

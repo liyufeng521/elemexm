@@ -9,7 +9,7 @@
           <div id="pass_both">
           <input placeholder="旧密码" v-model="oldpassWord" type="text">
           <input placeholder="请输入新密码" v-model="newpassword" type="text">
-          <input placeholder="请确认新密码" v-model="confirmpassword" type="text">
+          <input placeholder="请确认新密码" v-model="cofirmpassword" type="text">
           </div>
           <div id="code_text">
           <input placeholder="验证码" v-model="captcha_code" type="text">  
@@ -20,6 +20,14 @@
            <el-button type="success" id="login_btn" @click="gaiPass()">确认修改</el-button>
 
       </div>
+       <!-- 弹出框 -->
+           <div id="mask">
+               <div id="kuang">
+               <span class="el-icon-warning-outline kuang_i"></span> 
+               <p v-text="message"></p>
+               <button @click="knone()">确认</button>
+               </div>
+           </div>
   </div>
 </template>
 
@@ -34,7 +42,8 @@ export default {
             newpassword:"",
             cofirmpassword:"",
             captcha_code:"",
-            code:""
+            code:"",
+            message:""
         }
     },
     created(){
@@ -70,13 +79,16 @@ export default {
                     username:this.username,
                     oldpassWord:this.oldpassWord,
                     newpassword:this.newpassword,
-                    confirmpassword:this.confirmpassword,
+                    confirmpassword:this.cofirmpassword,
                     captcha_code:this.captcha_code
                 }
             }).then(res=>{
                 // console.log(res);
                 if(res.data.message){
-                    alert(res.data.message);
+                    this.message=res.data.message;
+                    this.gaicode();
+                    this.kshow();
+                    this.captcha_code="";
                     return;
                 }
                
@@ -84,6 +96,12 @@ export default {
         },
         router1(){
             this.$router.go(-1);
+        },
+        kshow(){
+            $("#mask").css("display","block");
+        },
+        knone(){
+            $("#mask").css("display","none");
         }
 
     }
@@ -91,10 +109,53 @@ export default {
 </script>
 
 <style scoped>
+/* 弹出框 */
+#mask{
+    width: 37.5rem;
+    height: 66.7rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:rgba(0,0,0,0);
+    display: none;
+}
+#kuang{
+    width: 28rem;
+    margin: 0 auto;
+    margin-top: 12rem;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+.kuang_i{
+    font-size: 7rem;
+    margin-top: 2rem;
+    color: #fe6d47;
+}
+#kuang>p{
+    color: #333;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+}
+#kuang>button{
+    width: 28rem;
+    height: 4rem;
+    background-color: #4cd964;
+    color: #fff;
+    font-size: 1.875rem;
+    margin-top: 2rem;
+    border: none;
+}
+
     #login_title{
         height: 4.57rem;
         background-color: #3190e8;
         text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 37.5rem;
     }
     #login_title_i{
         font-size: 2rem;
@@ -111,15 +172,16 @@ export default {
         margin-right: 2rem;
     }
     #input_user {
-        margin-top: 1.5rem;
+        margin-top: 6.5rem;
     }
     input{
-        width: 100%;
+        width: 37.5rem;
         height: 4.9rem;
         font-size: 1.75rem;
         color: #666;
         padding-left: 1.5rem;
         margin-top: 1px;
+        box-sizing: border-box;
     }
     #pass_both{
         position: relative;

@@ -6,7 +6,6 @@
               <span id="delate" v-text="gai_text" @click="genggai()"></span>
         </div>
         <ul id="lists">
-            <p v-text="delate"></p>
             <li v-for="(v,i) in address_list" :key="i">
                 <p>{{v.name}}</p>
                 <p>{{v.phone}}</p>
@@ -15,6 +14,14 @@
         </ul>
         <p id="add" @click="router2()"><span>新增地址</span><span class="el-icon-arrow-right
  add_i"></span></p>
+         <!-- 弹出框 -->
+           <div id="mask">
+               <div id="kuang">
+               <span class="el-icon-warning-outline kuang_i"></span> 
+               <p v-text="message"></p>
+               <button @click="knone()">确认</button>
+               </div>
+           </div>
   </div>
 </template>
 
@@ -26,6 +33,7 @@ export default {
             gai_text:"编辑",
             data:{},
             address_list:[],
+            message:""
         }
     },
     created(){
@@ -48,14 +56,14 @@ export default {
             }
         },
         router1(){
-    //         this.$router.push({
-    //     path:'/zhanghu',
-    //     name:'zhanghu',
-    //     query:{
-    //      data:this.data,
-    //     }
-    //   })
-    this.$router.go(-1);
+            this.$router.push({
+        path:'/zhanghu',
+        name:'zhanghu',
+        query:{
+         data:this.data,
+        }
+      })
+    // this.$router.go(-1);
         },
         router2(){
             this.$router.push({
@@ -91,15 +99,61 @@ export default {
                     address_id:this.address_list[i].id
                 }
             }).then(res=>{
+                this.message=res.data.success;
                 this.getdizhi();
-                alert(res.data.success);
+                this.kshow();
             })
+        },
+        kshow(){
+            $("#mask").css("display","block");
+        },
+        knone(){
+            $("#mask").css("display","none");
         }
     }
 }
 </script>
 
 <style scoped>
+/* 弹出框 */
+#mask{
+    width: 37.5rem;
+    height: 66.7rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:rgba(0,0,0,0);
+    display: none;
+}
+#kuang{
+    width: 28rem;
+    margin: 0 auto;
+    margin-top: 12rem;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+.kuang_i{
+    font-size: 7rem;
+    margin-top: 2rem;
+    color: #fe6d47;
+}
+#kuang>p{
+    color: #333;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+}
+#kuang>button{
+    width: 28rem;
+    height: 4rem;
+    background-color: #4cd964;
+    color: #fff;
+    font-size: 1.875rem;
+    margin-top: 2rem;
+    border: none;
+}
+
      #login_title{
         height: 4.57rem;
         background-color: #3190e8;

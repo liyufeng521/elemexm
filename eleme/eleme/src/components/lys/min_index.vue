@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="bol">
       <div id="min">
          <div id="login_title">
               <span class="el-icon-arrow-left" id="login_title_i"></span>
@@ -90,7 +90,8 @@ export default {
       username:"",
       mobile:"",
       gift_amount:"0",
-      data:{}
+      data:{},
+      bol:false
     }
   },
   created(){
@@ -194,7 +195,8 @@ export default {
       }).then(res=>{
         // console.log(res.data);
         this.data=res.data;
-        console.log(this.data);
+        // console.log(this.data);
+        this.bol=true;
         if(!res.data.username){
           this.username= "登录/注册"
         }else{

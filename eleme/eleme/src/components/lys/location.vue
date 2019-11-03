@@ -7,8 +7,16 @@
         <div id="conent">
             <i class="iconfont conent_i">&#xe68c;</i>
             <p id="conent_text">下载饿了么APP</p>
-            <input type="button" value="下载" id="conent_btn" @click="location()">
+            <input type="button" value="下载" id="conent_btn" @click="kshow()">
         </div>
+        <!-- 弹出框 -->
+           <div id="mask">
+               <div id="kuang">
+               <span class="el-icon-warning-outline kuang_i"></span> 
+               <p>IOS用户请前往APPStore下载</p>
+               <button @click="knone">确认</button>
+               </div>
+           </div>
   </div>
 </template>
 
@@ -24,14 +32,56 @@ export default {
         routergo(){
             this.$router.go(-1);
         },
-        locatioin(){
-            alert();
+        kshow(){
+            $("#mask").css("display","block");
+        },
+        knone(){
+            $("#mask").css("display","none");
         }
         }
 }
 </script>
 
 <style scoped>
+/* 弹出框 */
+#mask{
+    width: 37.5rem;
+    height: 66.7rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:rgba(0,0,0,0);
+    display: none;
+}
+#kuang{
+    width: 28rem;
+    margin: 0 auto;
+    margin-top: 18rem;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+.kuang_i{
+    font-size: 7rem;
+    margin-top: 2rem;
+    color: #fe6d47;
+}
+#kuang>p{
+    color: #333;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+}
+#kuang>button{
+    width: 28rem;
+    height: 4rem;
+    background-color: #4cd964;
+    color: #fff;
+    font-size: 1.875rem;
+    margin-top: 2rem;
+    border: none;
+}
+
 @font-face {
   font-family: 'iconfont';  /* project id 1477980 */
   src: url('http://at.alicdn.com/t/font_1477980_2buov3gi6du.eot');

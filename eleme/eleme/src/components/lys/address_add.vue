@@ -12,6 +12,14 @@
             <input type="text" v-model="phone_bk" placeholder="备用联系电话(选填)">
             <div><button @click="add_address()">新增地址</button></div>
         </div>
+         <!-- 弹出框 -->
+           <div id="mask">
+               <div id="kuang">
+               <span class="el-icon-warning-outline kuang_i"></span> 
+               <p v-text="message"></p>
+               <button @click="knone()">确认</button>
+               </div>
+           </div>
   </div>
 </template>
 
@@ -31,7 +39,9 @@ export default {
             tag:"tag",
             sex:"1",
             tag_type:"1",
-            geo_xinxi:{}
+            geo_xinxi:{},
+            message:"",
+            zhuan:false,
         }
     },
     created(){
@@ -39,11 +49,13 @@ export default {
         this.user_id=this.$route.query.data.user_id;
         this.address=this.$route.query.xinxi.name;
         console.log(this.$route.query.xinxi);
+        console.log(this.$route.query.name);
         console.log(this.user_id);
         console.log(this.data);
         this.geohash=this.$route.query.xinxi.geohash;
         console.log(this.geohash);
-        
+        this.name=this.$route.query.name;
+        console.log(this.name);
 
     },
     methods:{
@@ -74,8 +86,17 @@ export default {
                     tag_type:this.tag_type
                 }
             }).then(res=>{
-                console.log(res.data.success);
-            })
+                this.message=res.data.success;
+                if(this.message){
+                    this.kshow();
+                }else{
+                    this.message="信息错误，无法添加";
+                    this.kshow();
+                }
+                
+                
+            });
+
         },
         getxinxi(){
             this.$router.push({
@@ -83,14 +104,68 @@ export default {
                 name:'sousuo',
                 query:{
                     data:this.data,
+                    name:this.name,
                 }
             })
+        },
+        kshow(){
+            $("#mask").css("display","block");
+        },
+        knone(){
+            this.zhuan=true;
+            $("#mask").css("display","none");           
+        }
+    },
+    watch:{
+        zhuan:function(newV,oldV){
+            if(newV){
+                this.router1();
+            }
         }
     }
 }
 </script>
 
 <style scoped>
+/* 弹出框 */
+#mask{
+    width: 37.5rem;
+    height: 66.7rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:rgba(0,0,0,0);
+    display: none;
+}
+#kuang{
+    width: 28rem;
+    margin: 0 auto;
+    margin-top: 18rem;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+.kuang_i{
+    font-size: 7rem;
+    margin-top: 2rem;
+    color: #fe6d47;
+}
+#kuang>p{
+    color: #333;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+}
+#kuang>button{
+    width: 28rem;
+    height: 4rem;
+    background-color: #4cd964;
+    color: #fff;
+    font-size: 1.875rem;
+    margin-top: 2rem;
+    border: none;
+}
+
      #login_title{
         height: 4.57rem;
         background-color: #3190e8;
@@ -115,6 +190,7 @@ export default {
         line-height: 3rem;
         margin-top: 2px;
         padding:1rem;
+        box-sizing: border-box;
     }
     #add_form>div{
         text-align: center;
@@ -127,5 +203,6 @@ export default {
         color: #fff;
         background-color:green;
         border: none; 
+        border-radius: 0.5rem;
     }
 </style>

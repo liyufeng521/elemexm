@@ -11,7 +11,7 @@
                 <span id="yue_qian_text_right" @click="router2()">积分说明</span>
                 <p id="money_fath"><span id="money">0</span><span id="money_text">分</span></p>
                 <!-- <input type="button" value="提现">  -->
-                 <div id="money_btn_fath"><button id="money_btn" @click="get()">积分兑换商品</button></div>
+                 <div id="money_btn_fath"><button id="money_btn" @click="kshow()">积分兑换商品</button></div>
                 </div>      
           </div>
           <span id="yue_text">最近30天积分记录</span>
@@ -20,6 +20,15 @@
               <p>最近30天无积分记录</p>
               <p id="last_small">快去下单赚取大量积分吧</p>
            </div>
+           <!-- 弹出框 -->
+           <div id="mask">
+               <div id="kuang">
+               <span class="el-icon-warning-outline kuang_i"></span> 
+               <p>快去下单赚取大量积分吧</p>
+               <button @click="knone">确认</button>
+               </div>
+           </div>
+           
 
     </div>
 </template>
@@ -44,12 +53,57 @@ export default {
                 name:'jifen_shuoming',
                 path:'/jifen_shuoming'
             })
+        },
+        kshow(){
+            $("#mask").css("display","block");
+        },
+        knone(){
+            $("#mask").css("display","none");
         }
+        
     }
 }
 </script>
 
 <style scoped>
+/* 弹出框 */
+#mask{
+    width: 37.5rem;
+    height: 66.7rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color:rgba(0,0,0,0);
+    display: none;
+}
+#kuang{
+    width: 28rem;
+    margin: 0 auto;
+    margin-top: 18rem;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+.kuang_i{
+    font-size: 7rem;
+    margin-top: 2rem;
+    color: #fe6d47;
+}
+#kuang>p{
+    color: #333;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+}
+#kuang>button{
+    width: 28rem;
+    height: 4rem;
+    background-color: #4cd964;
+    color: #fff;
+    font-size: 1.875rem;
+    margin-top: 2rem;
+    border: none;
+}
 @font-face {
   font-family: 'iconfont';  /* project id 1477980 */
   src: url('http://at.alicdn.com/t/font_1477980_9f01tem0cbp.eot');

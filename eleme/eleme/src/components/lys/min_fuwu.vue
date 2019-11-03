@@ -97,6 +97,10 @@ export default {
         height: 4.57rem;
         background-color: #3190e8;
         text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 37.5rem;
     }
     #login_title_i{
         font-size: 2rem;
@@ -115,6 +119,7 @@ export default {
     #kefu{
         color: #333;
         height: 8.84rem;
+        margin-top: 5rem;
     }
     #kefu_left{
         text-align: center;

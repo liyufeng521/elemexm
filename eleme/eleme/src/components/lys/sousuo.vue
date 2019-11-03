@@ -41,12 +41,15 @@ export default {
             state: '',
             timeout:  null,
             lis:null,
-            data:{}
+            data:{},
+            name:""
         }
     },
     created() {
         this.data=this.$route.query.data;
         console.log(this.data);
+        this.name=this.$route.query.name;
+        console.log(this.name);
     },
     methods: {
         loadAll() {
@@ -140,6 +143,7 @@ export default {
               name:'address_add',
               query:{
                 data:this.data,
+                name:this.name,
               }
             })
         },
@@ -157,7 +161,8 @@ export default {
         path:"/address_add",
         query:{
             xinxi:a,
-            data:this.data
+            data:this.data,
+            name:this.name,
         }
         // query:{
         //   da:a
